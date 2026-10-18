@@ -1,0 +1,417 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>ROBO LOOP LAB • FOR vs WHILE • Grade 9 ICT</title>
+<style>
+:root{--night:#080f2b;--panel:#101b3a;--cyan:#3beaff;--blue:#3e95ff;--pink:#ff4dd3;--lime:#8aff8b;--yellow:#ffdc65;--purple:#a787ff;--white:#f5faff}
+*{box-sizing:border-box}html,body{height:100%;margin:0}body{color:var(--white);font-family:ui-rounded,'Trebuchet MS',Arial,sans-serif;background:radial-gradient(ellipse at 15% 1%,#193d71 0,#0a1434 42%,#070c25 100%);overflow:hidden}
+button,textarea{font:inherit}button{cursor:pointer;user-select:none;-webkit-tap-highlight-color:transparent}button:focus-visible,textarea:focus-visible{outline:3px solid #ffed86;outline-offset:3px}
+.app{height:100dvh;min-height:500px;display:grid;grid-template-rows:auto minmax(0,1fr) auto;gap:12px;padding:12px 16px 14px;position:relative;isolation:isolate}
+.app:before{content:'';position:absolute;inset:0;pointer-events:none;background-image:radial-gradient(#74baff45 1px,transparent 1px);background-size:28px 28px;mask-image:linear-gradient(to bottom,transparent,#000 28%,#000 72%,transparent);z-index:-1}
+.top{height:65px;display:flex;align-items:center;justify-content:space-between;gap:12px;background:#0e1a39dd;border:2px solid #334f86;border-radius:21px;padding:8px 18px;box-shadow:0 7px 35px #0004,inset 0 0 24px #5bc6ff0a}
+.brand{display:flex;align-items:center;gap:13px;min-width:0}.logo{background:linear-gradient(140deg,#31bfff,#ff57df);height:46px;width:46px;display:grid;place-items:center;border-radius:14px;box-shadow:0 0 17px #20f0ef66;font-size:27px;flex-shrink:0}.title{font-size:clamp(19px,2.5vw,37px);font-weight:1000;white-space:nowrap;letter-spacing:1px;line-height:1}.title span{color:var(--cyan);text-shadow:0 0 15px #17d5fa60}.sub{font-size:clamp(10px,1.05vw,15px);color:#c2d3f5;margin-top:3px;font-weight:700;letter-spacing:1px}.top-right{display:flex;align-items:center;gap:10px}.pill{font-size:clamp(11px,1.15vw,17px);border:1px solid #385680;color:#cfe8fd;padding:8px 13px;border-radius:99px;white-space:nowrap;background:#142243}.pill strong{color:var(--yellow)}.topBtn{border:2px solid #5d7fac;color:#fff;border-radius:13px;padding:10px 13px;background:#172b53;font-weight:1000;font-size:15px}.topBtn:hover{background:#244476}
+.arena{display:grid;grid-template-columns:1.015fr 1fr;gap:12px;min-height:0}
+.stage,.work{min-height:0;position:relative;overflow:hidden;border-radius:25px}
+.stage{background:radial-gradient(ellipse at 50% 45%,#1f6b9f59,transparent 65%),linear-gradient(150deg,#111c47,#0c1637 70%,#101a3f);border:2px solid #366ad5;box-shadow:inset 0 0 45px #0da7df21,0 0 20px #2b73ff30}
+.stage:before,.stage:after{content:'';position:absolute;width:190px;height:190px;border:3px solid #31c6fb18;transform:rotate(45deg);pointer-events:none}.stage:before{top:-110px;left:-95px}.stage:after{bottom:-140px;right:-90px}
+.stage-title{position:absolute;top:12px;left:18px;display:flex;align-items:center;gap:10px;z-index:3}.stage-title b{font-size:clamp(17px,1.8vw,27px);color:#e5faff;text-shadow:0 0 20px #28dbff55}.live{background:#0c2940;border:2px solid #12cea5;padding:6px 11px;border-radius:20px;color:#93ffd9;font-size:12px;font-weight:1000;letter-spacing:1px;box-shadow:0 0 12px #12cea633}
+.stage-hint{position:absolute;top:51px;left:18px;color:#aec7ed;font-size:clamp(11px,1.1vw,16px);font-weight:800;z-index:3}
+.bubble{position:absolute;top:12%;right:5%;max-width:45%;min-height:72px;display:flex;align-items:center;justify-content:center;text-align:center;padding:12px 17px;border:3px solid #ffe37e;border-radius:22px 22px 6px 22px;background:#203052f5;color:#fff6bf;font-weight:1000;font-size:clamp(17px,2vw,32px);line-height:1.2;box-shadow:0 0 25px #ffd36352;z-index:4;overflow-wrap:anywhere;transition:transform .2s}.bubble:after{content:'';position:absolute;bottom:-13px;right:17px;border-top:12px solid #ffe37e;border-left:13px solid transparent}.bubble.pop{animation:pop .25s}@keyframes pop{50%{transform:scale(1.07)}}
+.halo{position:absolute;left:50%;top:42%;width:60%;aspect-ratio:1;border-radius:50%;transform:translate(-50%,-50%);background:radial-gradient(circle,#21edff23,#20beff0d 52%,transparent 72%);box-shadow:0 0 60px #18c8ff0d}
+.stage-dots{position:absolute;left:0;right:0;bottom:15%;height:30%;opacity:.23;background:linear-gradient(transparent 49%,#228bfc60 50%,transparent 51%),linear-gradient(90deg,transparent 49%,#228bfc60 50%,transparent 51%);background-size:100% 34px,45px 100%;transform:perspective(240px) rotateX(47deg) scale(1.5);pointer-events:none}
+.robot-wrap{--moveX:0px;position:absolute;left:50%;bottom:9%;height:78%;max-height:690px;max-width:72%;aspect-ratio:430/660;transform:translateX(calc(-50% + var(--moveX)));transition:transform .55s cubic-bezier(.22,.7,.18,1);z-index:2;filter:drop-shadow(0 20px 11px #030b30a8)}
+.robot-wrap svg{width:100%;height:100%;display:block;overflow:visible}.robot-wrap.walk #legL{animation:legL .25s 2}.robot-wrap.walk #legR{animation:legR .25s 2}.robot-wrap.walk #armL{animation:armL .25s 2}.robot-wrap.walk #armR{animation:armR .25s 2}.robot-wrap.walk #bodyAll{animation:walkbob .25s 2}.robot-wrap.talking #mouthTalk{opacity:1}.robot-wrap.talking #mouthSmile{opacity:0}.robot-wrap.talking #armR{animation:wave .34s 3;transform-origin:340px 290px}
+@keyframes legL{50%{transform:rotate(12deg)}}@keyframes legR{50%{transform:rotate(-11deg)}}@keyframes armL{50%{transform:rotate(-13deg)}}@keyframes armR{50%{transform:rotate(10deg)}}@keyframes walkbob{50%{transform:translateY(-8px)}}@keyframes wave{50%{transform:rotate(-22deg)}}
+#legL,#legR{transform-box:fill-box;transform-origin:50% 8%}#armL,#armR{transform-box:fill-box;transform-origin:50% 17%}#bodyAll{transform-origin:center bottom}
+.robot-shadow{position:absolute;left:30%;right:30%;bottom:8%;height:23px;border-radius:50%;background:#00eaffb5;filter:blur(13px)}
+.floor{position:absolute;left:7%;right:7%;bottom:3%;height:36px;display:grid;grid-template-columns:repeat(9,1fr);gap:7px;z-index:1}.tile{border:2px solid #3677b4;background:linear-gradient(120deg,#173c6d,#102b56);border-radius:10px;display:grid;place-items:center;color:#8ad2fb;font-weight:1000;font-size:17px;box-shadow:0 6px 0 #031024}.tile.active{background:linear-gradient(130deg,#48e9fb,#357df7);color:#061c4b;box-shadow:0 0 20px #45dafe,0 5px 0 #0b3b69}.tile.done{border-color:#85ffb9;color:#9bffc1}
+.position-readout{position:absolute;bottom:54px;left:13px;border:1px solid #3c70b0;background:#101f43e0;padding:6px 12px;border-radius:99px;color:#ccdefd;font-size:14px;font-weight:900;z-index:3}.position-readout strong{color:#72ffcf}
+.work{border:2px solid #895eff;background:linear-gradient(155deg,#192044,#0b1635);box-shadow:0 0 24px #7a40ff35;display:flex;flex-direction:column;padding:12px;gap:9px}
+.work-head{display:flex;align-items:center;justify-content:space-between;gap:8px;flex-wrap:wrap}.work-title{font-weight:1000;font-size:clamp(18px,1.8vw,27px);letter-spacing:.5px}.work-title span{color:#ff7dea}.editor-note{background:#2a2356;border:1px solid #7652b1;border-radius:20px;padding:6px 9px;font-size:clamp(10px,.98vw,14px);font-weight:900;color:#decaff}
+/* Clear, projector-friendly tabs for choosing the loop type. */
+.mode-switch{display:flex;gap:8px;align-items:center;flex-wrap:wrap}
+.mode-btn{background:#172950;border:2px solid #5374b5;border-radius:13px;color:#e5f3ff;min-height:39px;padding:6px 15px;font-size:clamp(13px,1.05vw,17px);font-weight:1000}
+.mode-btn.active{background:linear-gradient(100deg,#49dff2,#64a8ff);color:#071c43;border-color:#bafcff;box-shadow:0 0 12px #23e5ff66}
+.mode-btn:focus-visible{outline:3px solid #fff17b;outline-offset:2px}
+.mode-btn.compare-active{background:linear-gradient(105deg,#e9bcff,#ffb9e7);color:#361347;border-color:#ffe5fa;box-shadow:0 0 14px #ff6fe288}
+.compare-area{display:none;min-height:0;flex:1 1 auto;flex-direction:column;gap:9px}
+.compare-area.visible{display:flex}
+.work:has(.compare-area.visible) .console{flex:0 0 82px;min-height:65px}
+.compare-headline{display:flex;align-items:center;justify-content:space-between;gap:12px;flex-wrap:wrap;color:#eff7ff;font-weight:1000;font-size:clamp(14px,1.08vw,18px)}
+.compare-badge{border-radius:99px;padding:5px 11px;background:#ffde75;color:#1d2440;font-size:clamp(12px,1.05vw,16px)}
+.compare-editors{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:10px;flex:1 1 auto;min-height:180px}
+.compare-card{border:2px solid #316bab;border-radius:17px;background:#061125;min-width:0;display:flex;flex-direction:column;overflow:hidden;transition:box-shadow .2s,border-color .2s}
+.compare-card.for-card{border-color:#2ee0f4}.compare-card.while-card{border-color:#fd7ad5}
+.compare-card.playing{box-shadow:0 0 27px #f6d8718c;border-color:#fff18a}
+.compare-card.completed{box-shadow:0 0 13px #6effc386}
+.compare-card-head{padding:10px 12px;display:flex;align-items:center;justify-content:space-between;gap:5px;background:#132647;flex-wrap:wrap}
+.compare-card-head strong{font-size:clamp(15px,1.25vw,20px)}
+.for-card .compare-card-head strong{color:#68edff}.while-card .compare-card-head strong{color:#ff9cdb}
+.compare-card-head span{font-size:clamp(11px,.93vw,15px);font-weight:900;color:#b8cce8}
+.compare-code{resize:none;min-width:0;min-height:125px;flex:1;background:#080f26;color:#eff7ff;border:0;padding:16px 12px;font:800 clamp(16px,1.19vw,23px)/1.52 Consolas,'Courier New',monospace;tab-size:4;white-space:pre;overflow:auto;outline-offset:-3px;caret-color:#ffe685}
+.compare-code:focus-visible{outline:3px solid #ffe685;outline-offset:-4px}
+.compare-foot{padding:9px 12px;background:#152444;display:flex;gap:5px;align-items:center;justify-content:space-between;flex-wrap:wrap;font-size:clamp(11px,1vw,15px);font-weight:900;color:#d3f5ff}
+.compare-foot strong{font-size:clamp(15px,1.2vw,19px);color:#ffe785}
+.compare-lessons{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:10px}
+.compare-lesson{font-size:clamp(12px,1.02vw,16px);padding:9px 11px;border-radius:12px;background:#173051;border:1px solid #357eaa;color:#dcf7ff;font-weight:850;line-height:1.35}
+.compare-lesson:nth-child(2){border-color:#a95a9f;background:#321a4c}
+.compare-lesson b{color:#ffdf7a}
+.compare-conclusion{padding:8px 11px;border-radius:12px;border:1px solid #5672ab;background:#152344;font-size:clamp(13px,1.03vw,17px);font-weight:900;color:#ffe6a5}
+.compare-conclusion.success{color:#99ffd3;border-color:#40ca8f;background:#143a41}
+#editorOne.hidden{display:none}
+.loop-tip{color:#ffe991;font-size:clamp(13px,1.08vw,17px);font-weight:900;padding:0 2px;letter-spacing:.1px}
+.editor-box{border:2px solid #4876ca;background:#070f25;border-radius:17px;display:flex;min-height:120px;flex:1 1 auto;overflow:hidden;box-shadow:inset 0 0 25px #010923}
+.line-nums{min-width:53px;padding:14px 10px 14px 8px;display:flex;flex-direction:column;align-items:flex-end;gap:0;border-right:1px solid #294273;background:#101c3a;color:#6281b3;font-size:clamp(18px,1.65vw,28px);font-family:Consolas,'Courier New',monospace;line-height:1.55;overflow:hidden;user-select:none}
+.code{resize:none;display:block;flex:1;width:100%;min-width:0;outline:none!important;border:0;color:#d9f8ff;background:transparent;caret-color:#fff080;font-weight:800;font-family:Consolas,'Courier New',monospace;line-height:1.55;letter-spacing:.1px;font-size:clamp(18px,1.65vw,28px);padding:14px 12px;tab-size:4;white-space:pre;overflow:auto;scrollbar-color:#3963a2 #101a35}.code::selection{color:#fff;background:#7951c5}.code::placeholder{color:#8899b3}
+.buttons-row{display:flex;gap:9px}.run,.stop,.reset{border:0;border-radius:13px;padding:10px 12px;min-height:52px;font-weight:1000;font-size:clamp(15px,1.15vw,19px);box-shadow:inset 0 -3px 0 #0003}.run{flex:1;background:linear-gradient(110deg,#8fff88,#25deaf);color:#072e36;box-shadow:0 0 24px #27dca562,inset 0 -3px 0 #06422a55}.run:hover{filter:brightness(1.12)}.stop{background:#fa5c99;color:#3d0b25}.reset{background:#ffe57e;color:#433113}.stop:disabled{opacity:.4;cursor:not-allowed}
+.comparison-output{border:1px solid #3b7aaa;border-radius:10px;background:#142649;padding:7px 10px;color:#e5f6ff;font-size:clamp(12px,.99vw,16px);font-weight:900;display:none;gap:8px;flex-wrap:wrap}
+.comparison-output.show{display:flex}
+.comparison-output span{color:#6dffe0}
+.console{border:1px solid #2f5090;background:#08152e;border-radius:15px;min-height:100px;max-height:138px;display:grid;grid-template-rows:auto minmax(0,1fr);flex:0 0 clamp(100px,17%,135px);overflow:hidden}.console-head{display:flex;justify-content:space-between;align-items:center;padding:8px 12px;background:#15264b;font-size:14px;font-weight:1000;color:#a7e8ff}.counter{background:#0d3446;border:1px solid #2db4d0;border-radius:20px;color:#77effe;padding:4px 10px;font-size:13px}.console-text{padding:8px 14px;overflow-y:auto;white-space:pre-wrap;line-height:1.4;color:#d1ffce;font-family:Consolas,'Courier New',monospace;font-size:clamp(13px,1.16vw,19px);font-weight:700;scrollbar-color:#314e8e #091329}.console-text .error{color:#ffc4d3}.console-text .prompt{color:#6fcbff}
+.choices{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:12px;min-height:0}.choice{position:relative;display:flex;align-items:center;justify-content:flex-start;gap:12px;border:3px solid transparent;border-radius:21px;min-height:103px;text-align:left;padding:13px clamp(9px,1.4vw,22px);transition:transform .12s,box-shadow .12s;overflow:hidden;box-shadow:inset 0 -5px 0 #0002,0 4px 17px #0004}.choice:hover{transform:translateY(-3px)}.choice.active{outline:3px solid #fff;outline-offset:-7px;box-shadow:0 0 24px #aabfff55,inset 0 -5px 0 #0002}.choice.forward{background:linear-gradient(110deg,#84edff,#3bb8f9);color:#06355d}.choice.speak{background:linear-gradient(110deg,#ffb2f1,#f76aca);color:#50154c}.choice.back{background:linear-gradient(110deg,#ffe18a,#ffab5e);color:#5e2b13}.choice.count{background:linear-gradient(110deg,#9df8b3,#42dfaa);color:#155041}.choice .icon{font-size:clamp(30px,3.7vw,61px);line-height:1}.choice strong{display:block;font-size:clamp(16px,1.75vw,29px);letter-spacing:.3px;line-height:1.1;font-weight:1000}.choice small{display:block;font-size:clamp(12px,1.03vw,17px);font-weight:1000;margin-top:6px;font-family:Consolas,'Courier New',monospace;overflow-wrap:anywhere}.choice .tap{position:absolute;right:9px;top:7px;font-size:11px;background:#fff7;padding:2px 7px;border-radius:20px;font-weight:1000;letter-spacing:1px}
+.toast{position:absolute;left:50%;bottom:122px;transform:translateX(-50%);background:#1f325d;color:#fff;padding:12px 19px;border:1px solid #76d8ff;border-radius:18px;z-index:12;box-shadow:0 10px 30px #0008;display:none;font-weight:900;text-align:center}.toast.show{display:block}
+@media(max-width:1100px){.compare-code{font-size:clamp(15px,1.5vw,18px);padding:9px}.compare-card-head{padding:6px 9px}.compare-lessons{gap:5px}.compare-lesson{padding:6px 8px}.compare-foot{padding:5px 8px}.mode-btn{min-height:33px;padding:5px 9px}.loop-tip{font-size:12px}.app{gap:8px;padding:8px}.top{height:56px;padding:6px 10px}.logo{width:40px;height:40px}.stage-title{top:8px;left:10px}.stage-hint{top:43px;left:10px}.bubble{max-width:44%;font-size:clamp(14px,1.6vw,24px)}.work{padding:8px;gap:7px}.choice{min-height:85px;padding:8px;gap:6px}.choice .icon{font-size:32px}.choice .tap{display:none}.buttons-row>*{min-height:42px;padding:7px 10px}.console{min-height:75px;flex-basis:90px}}
+@media(max-width:900px) and (orientation:portrait){body{overflow:auto}.app{height:auto;min-height:100dvh;grid-template-rows:auto auto auto}.top{height:auto;min-height:63px;flex-wrap:wrap}.top-right{width:100%;justify-content:flex-end}.arena{grid-template-columns:1fr}.stage{height:460px}.robot-wrap{height:77%}.work{min-height:470px}.choices{grid-template-columns:repeat(2,minmax(0,1fr))}.compare-editors{grid-template-columns:1fr}.compare-code{min-height:125px}.compare-area.visible{min-height:490px}.choice{min-height:88px}.bubble{font-size:21px}}
+@media(max-height:640px) and (min-width:651px){.compare-headline{font-size:12px}.compare-lesson{font-size:11px;padding:5px}.compare-lessons{gap:5px}.compare-foot{padding:4px 6px}.compare-card-head{padding:4px 8px}.compare-code{min-height:65px;font-size:14px;line-height:1.3;padding:5px}.compare-editors{min-height:105px}.compare-conclusion{font-size:12px;padding:5px}.app{gap:5px;padding:5px 9px}.top{height:48px}.logo{height:33px;width:33px}.title{font-size:23px}.sub{font-size:10px}.stage-hint{display:none}.bubble{top:8%;min-height:42px}.work{padding:7px;gap:5px}.work-title{font-size:18px}.choice{min-height:65px}.choice strong{font-size:18px}.choice small{font-size:12px}.choice .icon{font-size:29px}.choices{gap:7px}.console{flex-basis:75px;min-height:60px}.console-head{padding:4px 8px}.buttons-row>*{min-height:36px;padding:4px 8px}}
+@media(prefers-reduced-motion:reduce){*{animation-duration:.01ms!important} .robot-wrap{transition-duration:.01ms!important}}
+</style>
+</head>
+<body>
+<div class="app">
+ <header class="top">
+  <div class="brand"><div class="logo" aria-hidden="true">🤖</div><div><div class="title">ROBO <span>LOOP LAB</span></div><div class="sub">GRADE 9 ICT • PYTHON FOR &amp; WHILE LOOPS</div></div></div>
+  <div class="top-right"><div class="pill"><strong>1</strong> Choose &nbsp;→&nbsp; <strong>2</strong> Edit &nbsp;→&nbsp; <strong>3</strong> Run</div><button type="button" id="soundBtn" class="topBtn" title="Toggle voice and sound effects" aria-pressed="true">🔊 SOUND ON</button><button type="button" class="topBtn" id="fullscreenBtn" title="Show on the smart board">⛶ FULL SCREEN</button></div>
+ </header>
+ <main class="arena">
+  <section class="stage" aria-label="Robot stage">
+    <div class="stage-title"><b>🤖 ROBOT WORLD</b><span class="live" id="status">● READY</span></div>
+    <div class="stage-hint">Watch my whole body move!</div>
+    <div class="bubble" id="bubble" aria-live="polite">Ready to code! ✨</div>
+    <div class="halo"></div><div class="stage-dots"></div><div class="robot-shadow"></div>
+    <div class="robot-wrap" id="robotWrap">
+    <svg viewBox="0 0 430 660" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Large full-body friendly white and cyan robot with legs and arms">
+      <defs>
+       <linearGradient id="helmet" x1="0" x2="1" y1="0" y2="1"><stop stop-color="#ffffff"/><stop offset=".55" stop-color="#d9f8ff"/><stop offset="1" stop-color="#79b8f8"/></linearGradient>
+       <linearGradient id="chest" x1="0" x2="1" y1="0" y2="1"><stop stop-color="#f8ffff"/><stop offset=".6" stop-color="#c4ecff"/><stop offset="1" stop-color="#5598ed"/></linearGradient>
+       <linearGradient id="screen" x1="0" x2="1" y1="0" y2="1"><stop stop-color="#102353"/><stop offset="1" stop-color="#040d2a"/></linearGradient>
+       <radialGradient id="light"><stop stop-color="#d8ffff"/><stop offset=".36" stop-color="#66fff4"/><stop offset="1" stop-color="#15a6ef"/></radialGradient>
+       <filter id="glow"><feGaussianBlur stdDeviation="5" result="s"/><feMerge><feMergeNode in="s"/><feMergeNode in="SourceGraphic"/></feMerge></filter>
+      </defs>
+      <g id="bodyAll">
+       <!-- antenna -->
+       <path d="M213 72V36" stroke="#b0f5ff" stroke-width="16" stroke-linecap="round"/><circle cx="213" cy="25" r="19" fill="url(#light)" stroke="#183f8b" stroke-width="9" filter="url(#glow)"/>
+       <!-- legs sit behind torso -->
+       <g id="legL"><rect x="125" y="453" width="75" height="120" rx="30" fill="url(#chest)" stroke="#123c88" stroke-width="11"/><rect x="126" y="513" width="74" height="23" rx="8" fill="#43bbf7"/><path d="M124 555Q103 554 93 583Q80 613 110 626H196Q213 623 205 596L192 569Z" fill="url(#helmet)" stroke="#15377f" stroke-width="11"/><path d="M105 603H185" stroke="#4abdeb" stroke-width="9" stroke-linecap="round"/></g>
+       <g id="legR"><rect x="230" y="453" width="75" height="120" rx="30" fill="url(#chest)" stroke="#123c88" stroke-width="11"/><rect x="230" y="513" width="75" height="23" rx="8" fill="#43bbf7"/><path d="M234 568L310 555Q329 554 341 589Q356 622 325 627H236Q216 619 225 595Z" fill="url(#helmet)" stroke="#15377f" stroke-width="11"/><path d="M244 603H324" stroke="#4abdeb" stroke-width="9" stroke-linecap="round"/></g>
+       <!-- left arm -->
+       <g id="armL"><circle cx="99" cy="305" r="37" fill="url(#chest)" stroke="#163d85" stroke-width="10"/><path d="M97 315Q49 332 40 389L53 428Q70 450 95 433L132 351Z" fill="url(#helmet)" stroke="#143c80" stroke-width="11"/><circle cx="51" cy="416" r="35" fill="#f8ffff" stroke="#1b3e89" stroke-width="11"/><path d="M39 397L52 378M59 397L76 386" stroke="#4ddde9" stroke-width="9" stroke-linecap="round"/></g>
+       <!-- right arm -->
+       <g id="armR"><circle cx="333" cy="305" r="37" fill="url(#chest)" stroke="#163d85" stroke-width="10"/><path d="M337 315Q376 333 386 391L372 430Q352 451 330 433L296 357Z" fill="url(#helmet)" stroke="#143c80" stroke-width="11"/><circle cx="376" cy="409" r="33" fill="#f7ffff" stroke="#1b3e89" stroke-width="11"/><path d="M365 390L350 379M381 386L397 378" stroke="#4ddde9" stroke-width="9" stroke-linecap="round"/></g>
+       <!-- torso -->
+       <path d="M128 276Q153 247 214 246Q277 247 303 276L324 415Q329 482 270 493H158Q98 484 105 413Z" fill="url(#chest)" stroke="#143d89" stroke-width="12"/>
+       <path d="M133 319Q159 292 217 299Q271 296 298 320L298 406Q286 455 216 457Q143 455 128 409Z" fill="#e3faff" stroke="#84cfff" stroke-width="5"/>
+       <circle cx="216" cy="368" r="66" fill="#113a8d" stroke="#42d0f1" stroke-width="11"/><circle cx="216" cy="368" r="45" fill="url(#light)" filter="url(#glow)"/><circle cx="202" cy="352" r="14" fill="#fff" opacity=".65"/><rect x="169" y="456" width="94" height="18" rx="9" fill="#1f8bcf" opacity=".6"/>
+       <!-- neck -->
+       <rect x="175" y="230" width="80" height="43" rx="15" fill="#5faeee" stroke="#173a86" stroke-width="9"/>
+       <!-- ears -->
+       <rect x="39" y="132" width="55" height="109" rx="23" fill="#a6e6ff" stroke="#173e8b" stroke-width="12"/><rect x="336" y="132" width="55" height="109" rx="23" fill="#a6e6ff" stroke="#173e8b" stroke-width="12"/><circle cx="67" cy="185" r="20" fill="url(#light)" stroke="#2066bf" stroke-width="7"/><circle cx="364" cy="185" r="20" fill="url(#light)" stroke="#2066bf" stroke-width="7"/>
+       <!-- big head -->
+       <path d="M78 139Q84 75 148 72Q215 58 285 74Q354 89 360 143L358 232Q347 284 278 289H150Q82 279 70 228Z" fill="url(#helmet)" stroke="#153f8c" stroke-width="12"/>
+       <path d="M106 134Q118 106 152 102Q215 91 275 101Q313 107 324 134L324 220Q310 253 277 259H152Q117 252 105 220Z" fill="url(#screen)" stroke="#2c74c5" stroke-width="9"/>
+       <!-- eyes -->
+       <path d="M148 172Q168 146 188 173" fill="none" stroke="#67faff" stroke-width="16" stroke-linecap="round" filter="url(#glow)"/><path d="M240 173Q260 146 281 173" fill="none" stroke="#67faff" stroke-width="16" stroke-linecap="round" filter="url(#glow)"/>
+       <!-- cheeks -->
+       <ellipse cx="142" cy="207" rx="16" ry="7" fill="#ff82e6" opacity=".6"/><ellipse cx="287" cy="207" rx="16" ry="7" fill="#ff82e6" opacity=".6"/>
+       <path id="mouthSmile" d="M188 211Q215 238 241 210" fill="none" stroke="#79fff1" stroke-width="10" stroke-linecap="round"/><ellipse id="mouthTalk" cx="215" cy="215" rx="15" ry="21" fill="#70fff4" opacity="0"/>
+       <path d="M126 121Q170 98 219 107" stroke="#d6ffff" stroke-width="8" stroke-linecap="round" opacity=".32" fill="none"/>
+       <!-- bolts -->
+       <circle cx="151" cy="285" r="7" fill="#83d9fb"/><circle cx="280" cy="285" r="7" fill="#83d9fb"/>
+      </g>
+    </svg>
+    </div>
+    <div class="position-readout">STEPS: <strong id="stepReadout">0</strong></div>
+    <div class="floor" id="floor" aria-hidden="true"></div>
+  </section>
+  <section class="work" aria-label="Python-style code editor">
+    <div class="work-head"><div class="work-title">⌨️ <span>PYTHON</span> CODE EDITOR</div><div class="mode-switch" role="group" aria-label="Choose loop type"><button type="button" class="mode-btn" data-mode="for" aria-pressed="false">🔁 FOR LOOP</button><button type="button" class="mode-btn" data-mode="while" aria-pressed="false">⏳ WHILE LOOP</button><button type="button" class="mode-btn active compare-active" data-mode="compare" aria-pressed="true">⚖️ COMPARE BOTH</button></div></div>
+    <div class="loop-tip" id="loopTip">COMPARE: one task, two ways. Run both to see if the result matches!</div>
+    <div class="editor-box hidden" id="editorOne"><div class="line-nums" id="lineNums" aria-hidden="true">1<br>2</div><textarea class="code" id="code" spellcheck="false" autocomplete="off" autocorrect="off" autocapitalize="off" aria-label="Write your robot commands"># Change the number to choose repetitions
+for step in range(4):
+    move_forward()</textarea></div>
+    <div class="compare-area visible" id="compareArea" aria-label="Compare FOR and WHILE loops">
+      <div class="compare-headline">👀 TWO different loops. ONE robot task. <span class="compare-badge">Edit both, then ▶ RUN BOTH</span></div>
+      <div class="compare-editors">
+        <div class="compare-card for-card" id="forCard"><div class="compare-card-head"><strong>🔁 FOR LOOP</strong><span>Known repetitions</span></div><textarea class="compare-code" id="forCode" aria-label="Edit FOR loop example" spellcheck="false" autocorrect="off" autocapitalize="off"></textarea><div class="compare-foot">FOR actions <strong id="forResult">—</strong></div></div>
+        <div class="compare-card while-card" id="whileCard"><div class="compare-card-head"><strong>⏳ WHILE LOOP</strong><span>Condition is checked</span></div><textarea class="compare-code" id="whileCode" aria-label="Edit WHILE loop example" spellcheck="false" autocorrect="off" autocapitalize="off"></textarea><div class="compare-foot">WHILE actions <strong id="whileResult">—</strong></div></div>
+      </div>
+      <div class="compare-lessons"><div class="compare-lesson">🔁 <b>FOR:</b> <code>range(4)</code> repeats automatically.</div><div class="compare-lesson">⏳ <b>WHILE:</b> checks <code>step &lt; 4</code> and needs <code>step = step + 1</code> to stop.</div></div>
+      <div class="compare-conclusion" id="compareConclusion" aria-live="polite">Will both loops make the robot do the same thing?</div>
+    </div>
+    <div class="buttons-row"><button class="run" type="button" id="runBtn">▶ RUN BOTH LOOPS</button><button class="stop" type="button" id="stopBtn" disabled>■ STOP</button><button class="reset" type="button" id="resetBtn">↺ RESET</button></div>
+    <div class="comparison-output" id="comparisonOutput" aria-live="polite"></div><div class="console" aria-live="polite"><div class="console-head"><span>▣ ROBOT OUTPUT</span><span class="counter" id="progress">0 / 0 actions</span></div><div class="console-text" id="consoleText"><span class="prompt">&gt;</span> Select a command below, edit your code, and press RUN!</div></div>
+  </section>
+ </main>
+ <nav class="choices" aria-label="Four helpful code templates">
+  <button class="choice forward active" type="button" data-mission="forward"><span class="icon">➡️</span><span><strong>MOVE FORWARD</strong><small>move_forward()</small></span><span class="tap">CHOOSE</span></button>
+  <button class="choice speak" type="button" data-mission="speak"><span class="icon">💬</span><span><strong>SPEAK</strong><small>say("Hello!")</small></span><span class="tap">CHOOSE</span></button>
+  <button class="choice back" type="button" data-mission="back"><span class="icon">⬅️</span><span><strong>MOVE BACK</strong><small>move_backward()</small></span><span class="tap">CHOOSE</span></button>
+  <button class="choice count" type="button" data-mission="count"><span class="icon">🔢</span><span><strong>COUNT</strong><small>count(number)</small></span><span class="tap">CHOOSE</span></button>
+ </nav>
+ <div class="toast" id="toast" role="status"></div>
+</div>
+<script>
+(()=>{'use strict';
+const $=s=>document.querySelector(s);const ed=$('#code'),forEd=$('#forCode'),whileEd=$('#whileCode'),robot=$('#robotWrap'),stage=$('.stage'),speech=$('#bubble'),status=$('#status'),out=$('#consoleText'),progress=$('#progress'),num=$('#stepReadout'),tiles=$('#floor');
+const SAMPLES={
+ for:{
+  forward:'# Repeat 4 times\nfor step in range(4):\n    move_forward()',
+  speak:'# Repeat the message 3 times\nfor word in range(3):\n    say("Hello, Grade 9!")',
+  back:'# Repeat 4 times\nfor step in range(4):\n    move_backward()',
+  count:'# Count 1, 2, 3, 4, 5\nfor number in range(1, 6):\n    count(number)'
+ },
+ while:{
+  forward:'step = 0\nwhile step < 4:\n    move_forward()\n    step = step + 1',
+  speak:'word = 0\nwhile word < 3:\n    say("Hello, Grade 9!")\n    word = word + 1',
+  back:'step = 0\nwhile step < 4:\n    move_backward()\n    step = step + 1',
+  count:'number = 1\nwhile number <= 5:\n    count(number)\n    number = number + 1'
+ }
+};
+let running=false,stopped=false,actionIndex=0,total=0,position=0,absoluteSteps=0,soundOn=true,ctx=null,currentMission='forward',currentMode='compare';
+for(let i=0;i<9;i++){const d=document.createElement('div');d.className='tile';d.textContent=i+1;tiles.appendChild(d);}const tileElements=Array.from(tiles.children);
+const delay=ms=>new Promise(r=>setTimeout(r,ms));
+function setStatus(s){status.textContent='● '+s;status.style.color=s==='RUNNING'?'#ffef95':s==='FINISHED'?'#90ffc2':s==='ERROR'?'#ff9eaa':'#93ffd9'}
+function showBubble(s){speech.textContent=String(s);speech.classList.remove('pop');void speech.offsetWidth;speech.classList.add('pop')}
+function flash(msg){const el=$('#toast');el.textContent=msg;el.classList.add('show');clearTimeout(flash.timer);flash.timer=setTimeout(()=>el.classList.remove('show'),1800)}
+function beep(freq=500,dur=.08){if(!soundOn)return;try{const A=window.AudioContext||window.webkitAudioContext;if(!A)return;ctx=ctx||new A();const osc=ctx.createOscillator(),gain=ctx.createGain();osc.type='sine';osc.frequency.value=freq;gain.gain.setValueAtTime(.03,ctx.currentTime);gain.gain.exponentialRampToValueAtTime(.0001,ctx.currentTime+dur);osc.connect(gain).connect(ctx.destination);osc.start();osc.stop(ctx.currentTime+dur)}catch(e){}}
+function lineNumbers(){const lines=Math.max(4,ed.value.split('\n').length+1);$('#lineNums').innerHTML=Array.from({length:lines},(_,i)=>i+1).join('<br>');$('#lineNums').scrollTop=ed.scrollTop}
+[forEd,whileEd].forEach(area=>area.addEventListener('keydown',e=>{if(e.key==='Tab'){e.preventDefault();area.setRangeText('    ',area.selectionStart,area.selectionEnd,'end')}if((e.ctrlKey||e.metaKey)&&e.key==='Enter'){e.preventDefault();run()}}));
+ed.addEventListener('input',lineNumbers);ed.addEventListener('scroll',()=>{$('#lineNums').scrollTop=ed.scrollTop});ed.addEventListener('keydown',e=>{if(e.key==='Tab'){e.preventDefault();let a=ed.selectionStart,b=ed.selectionEnd;ed.setRangeText('    ',a,b,'end');lineNumbers()}if((e.ctrlKey||e.metaKey)&&e.key==='Enter'){e.preventDefault();run()}});lineNumbers();
+function addLog(message,error=false){const p=document.createElement('div');p.className=error?'error':'';p.textContent=message;out.appendChild(p);out.scrollTop=out.scrollHeight}
+function clearLog(){out.textContent=''}
+function highlightTile(){tileElements.forEach((el,i)=>{el.classList.toggle('active',i===((position%9)+9)%9);el.classList.toggle('done',i<Math.abs(position)%9)})}
+function robotOffset(){const robotW=robot.getBoundingClientRect().width,stageW=stage.clientWidth;const max=Math.max(28,(stageW-robotW)/2-24);const one=Math.min(46,max/4);return Math.max(-max,Math.min(max,position*one))}
+function setPosition(){robot.style.setProperty('--moveX',robotOffset()+'px');num.textContent=String(absoluteSteps);highlightTile()}
+function resetWorld({clear=true}={}){if(clear){clearLog();addLog('> Choose a command and FOR or WHILE → edit the code → RUN');progress.textContent='0 / 0 actions'}position=0;absoluteSteps=0;setPosition();robot.classList.remove('walk','talking');showBubble('Ready to code! ✨');if(!running)setStatus('READY')}
+function stop(){stopped=true;if('speechSynthesis' in window)window.speechSynthesis.cancel();robot.classList.remove('talking');if(running){setStatus('STOPPING');showBubble('Stopping…')}else{setStatus('READY')}}
+function choose(name){
+ if(running){flash('Press STOP before changing the example');return}
+ currentMission=name;
+ if(currentMode==='compare'){
+  forEd.value=SAMPLES.for[name].replace(/^#.*\n/,'');
+  whileEd.value=SAMPLES.while[name];
+  resetCompareResults();
+ } else {ed.value=SAMPLES[currentMode][name];lineNumbers();}
+ Array.from(document.querySelectorAll('.choice')).forEach(b=>b.classList.toggle('active',b.dataset.mission===name));
+ resetWorld();beep(650,.06);
+ const tip=currentMode==='for'?'FOR: repeat a known number of times. Change range(4)!':currentMode==='while'?'WHILE: repeat while the condition is true. Increase the counter!':'COMPARE: one task, two ways. Run both to see if the result matches!';
+ $('#loopTip').textContent=tip;
+ setTimeout(()=>{
+  if(currentMode==='compare')return;
+  ed.focus();
+  const m=currentMode==='for'?/range\((?:1,\s*)?(\d+)/.exec(ed.value):/while\s+\w+\s*(?:<=|<|>=|>)\s*(\d+)/.exec(ed.value);
+  if(m){const p=ed.value.indexOf(m[1],m.index);ed.setSelectionRange(p,p+m[1].length)}
+ },10);
+ flash(currentMode==='compare'?'⚖️ Edit either loop and RUN BOTH!':currentMode==='while'?'⏳ Edit the stopping number, then RUN!':'✨ Change the highlighted number, then RUN!')
+}
+document.querySelectorAll('[data-mode]').forEach(btn=>btn.addEventListener('click',()=>{
+ if(running){flash('Press STOP before switching loops');return}
+ currentMode=btn.dataset.mode;
+ $('#editorOne').classList.toggle('hidden',currentMode==='compare');$('#compareArea').classList.toggle('visible',currentMode==='compare');
+ $('#runBtn').textContent=currentMode==='compare'?'▶ RUN BOTH LOOPS':'▶ RUN CODE';
+ $('#comparisonOutput').classList.remove('show');
+ document.querySelectorAll('[data-mode]').forEach(b=>{
+  const active=b.dataset.mode===currentMode;b.classList.toggle('active',active);b.classList.toggle('compare-active',active&&currentMode==='compare');b.setAttribute('aria-pressed',String(active));
+ });
+ choose(currentMission);
+}));
+document.querySelectorAll('[data-mission]').forEach(b=>b.addEventListener('click',()=>choose(b.dataset.mission)));
+$('#soundBtn').addEventListener('click',()=>{soundOn=!soundOn;if(!soundOn&&'speechSynthesis' in window)window.speechSynthesis.cancel();$('#soundBtn').textContent=soundOn?'🔊 SOUND ON':'🔇 SOUND OFF';$('#soundBtn').setAttribute('aria-pressed',String(soundOn));if(soundOn)beep(830,.11)});
+$('#fullscreenBtn').addEventListener('click',async()=>{try{if(!document.fullscreenElement)await document.documentElement.requestFullscreen();else await document.exitFullscreen()}catch(e){flash('Full screen not supported in this browser')}});
+$('#resetBtn').addEventListener('click',()=>{if(running){stop();flash('Stopping... press RESET again to clear')}else{resetWorld();resetCompareResults();beep(430,.06)}});
+$('#stopBtn').addEventListener('click',stop);$('#runBtn').addEventListener('click',run);window.addEventListener('resize',setPosition);
+// Teaching simulator: valid Python-like for/range, while conditions, simple
+// numeric assignment, and the four robot commands plus print(). No eval used.
+function splitArgs(text){
+ const result=[];let cur='',quote='',escape=false;
+ for(const ch of text){
+  if(escape){cur+=ch;escape=false;continue}
+  if(ch==='\\'){cur+=ch;escape=true;continue}
+  if(quote){cur+=ch;if(ch===quote)quote='';continue}
+  if(ch==='"'||ch==="'"){quote=ch;cur+=ch;continue}
+  if(ch===','){result.push(cur.trim());cur='';continue}cur+=ch
+ }
+ if(quote)throw Error('Missing closing quotation mark');
+ if(cur.trim())result.push(cur.trim());return result
+}
+function evaluate(expr,env,line){
+ expr=expr.trim();
+ if(/^-?\d+$/.test(expr))return Number(expr);
+ if(/^(['"])([\s\S]*)\1$/.test(expr))return expr.slice(1,-1).replace(/\\n/g,'\n').replace(/\\(['"\\])/g,'$1');
+ const plus=expr.match(/^([A-Za-z_]\w*)\s*([+-])\s*(\d+)$/);
+ if(plus&&Object.hasOwn(env,plus[1]))return Number(env[plus[1]])+(plus[2]==='+'?1:-1)*Number(plus[3]);
+ if(/^[A-Za-z_]\w*$/.test(expr)&&Object.hasOwn(env,expr))return env[expr];
+ throw Error('Line '+line+': use a number, quoted text, or a variable')
+}
+function compile(source){
+ const raw=source.replace(/\t/g,'    ').split(/\r?\n/);
+ const lines=raw.map((text,i)=>({body:text.trim(),indent:text.match(/^ */)[0].length,line:i+1})).filter(l=>l.body&&!l.body.startsWith('#'));
+ if(!lines.length)throw Error('Write a for or while loop first!');
+ let ix=0;
+ function block(minIndent){
+  const ops=[];
+  while(ix<lines.length){
+   const row=lines[ix];
+   if(row.indent<minIndent)break;
+   if(row.indent>minIndent)throw Error('Line '+row.line+': check the indentation (spaces)');
+   ix++;
+   const fm=row.body.match(/^for\s+([A-Za-z_]\w*)\s+in\s+range\(([^()]*)\)\s*:\s*$/);
+   if(fm){
+    const parts=splitArgs(fm[2]);
+    if(!parts.length||parts.length>3)throw Error('Line '+row.line+': try range(4) or range(1, 6)');
+    if(ix>=lines.length||lines[ix].indent<=row.indent)throw Error('Line '+row.line+': indent a command below for');
+    ops.push({kind:'for',name:fm[1],args:parts,child:block(lines[ix].indent),line:row.line});continue
+   }
+   const wm=row.body.match(/^while\s+([A-Za-z_]\w*)\s*(<=|>=|==|!=|<|>)\s*([A-Za-z_]\w*|-?\d+)\s*:\s*$/);
+   if(wm){
+    if(ix>=lines.length||lines[ix].indent<=row.indent)throw Error('Line '+row.line+': indent commands inside while');
+    ops.push({kind:'while',left:wm[1],operator:wm[2],right:wm[3],child:block(lines[ix].indent),line:row.line});continue
+   }
+   if(row.body.startsWith('for '))throw Error('Line '+row.line+': try for i in range(4):');
+   if(row.body.startsWith('while '))throw Error('Line '+row.line+': try while step < 4:');
+   const am=row.body.match(/^([A-Za-z_]\w*)\s*=\s*(.+)$/);
+   if(am){ops.push({kind:'assign',name:am[1],expr:am[2],line:row.line});continue}
+   const call=row.body.match(/^(move_forward|move_backward|say|count|print)\s*\((.*)\)\s*$/);
+   if(!call)throw Error('Line '+row.line+': try move_forward(), say("Hello"), or step = step + 1');
+   const args=splitArgs(call[2]);
+   if((call[1].startsWith('move_')&&args.length!==0)||(!call[1].startsWith('move_')&&args.length>1))throw Error('Line '+row.line+': check the brackets ( )');
+   ops.push({kind:'cmd',cmd:call[1],args,line:row.line});
+  }
+  return ops
+ }
+ if(lines[0].indent>0)throw Error('Line '+lines[0].line+': start your code at the left');
+ const ast=block(0);
+ if(ix<lines.length)throw Error('Line '+lines[ix].line+': check indentation');
+ const actions=[],env={};
+ let steps=0;
+ function bump(){
+  if(++steps>500)throw Error('Program too long: check your loop condition and counter');
+ }
+ function childOps(ops){
+  for(const o of ops){
+   bump();
+   if(o.kind==='assign'){
+    const val=evaluate(o.expr,env,o.line);
+    if(typeof val!=='number'||!Number.isInteger(val)||Math.abs(val)>100000)throw Error('Line '+o.line+': counter needs a small whole number');
+    env[o.name]=val;continue
+   }
+   if(o.kind==='for'){
+    const vals=o.args.map(a=>evaluate(a,env,o.line));
+    if(vals.some(v=>!Number.isInteger(v)))throw Error('Line '+o.line+': range() needs whole numbers');
+    const [start,end,step]=vals.length===1?[0,vals[0],1]:vals.length===2?[vals[0],vals[1],1]:vals;
+    if(step===0)throw Error('Line '+o.line+': the range step cannot be 0');
+    let guard=0;
+    for(let n=start;step>0?n<end:n>end;n+=step){
+     if(++guard>40)throw Error('Use 40 repetitions or fewer');
+     env[o.name]=n;childOps(o.child)
+    }
+    continue
+   }
+   if(o.kind==='while'){
+    let guard=0;
+    while(true){
+     bump();
+     const left=evaluate(o.left,env,o.line),right=evaluate(o.right,env,o.line);
+     if(typeof left!=='number'||typeof right!=='number')throw Error('Line '+o.line+': while needs numeric values');
+     const op=o.operator;
+     const ok=op==='<'?left<right:op==='>'?left>right:op==='<='?left<=right:op==='>='?left>=right:op==='=='?left===right:left!==right;
+     if(!ok)break;
+     if(++guard>40)throw Error('WHILE did not stop after 40 repeats. Did you update '+o.left+'?');
+     childOps(o.child)
+    }
+    continue
+   }
+   let arg=o.args[0]===undefined?undefined:evaluate(o.args[0],env,o.line);
+   if(o.cmd==='say'&&typeof arg!=='string'&&arg!==undefined)arg=String(arg);
+   if(o.cmd==='say'&&arg===undefined)throw Error('Line '+o.line+': say needs a message in quotes');
+   if(o.cmd==='print'&&arg===undefined)throw Error('Line '+o.line+': print needs a value');
+   actions.push({cmd:o.cmd,arg,line:o.line});
+   if(actions.length>40)throw Error('Please use 40 robot actions or fewer');
+  }
+ }
+ childOps(ast);
+ if(!actions.length)throw Error('No robot actions were produced. Check your loop number or condition.');
+ return actions
+}
+async function talk(text){showBubble(text);robot.classList.add('talking');if(soundOn&&'speechSynthesis' in window){try{const synth=window.speechSynthesis;synth.cancel();await Promise.race([new Promise(resolve=>{const u=new SpeechSynthesisUtterance(String(text));u.lang='en-US';u.rate=.95;u.pitch=1.18;u.volume=1;let done=false;u.onend=u.onerror=()=>{if(!done){done=true;resolve()}};synth.speak(u)}),delay(1400)])}catch(e){await delay(670)}}else{beep(760,.1);await delay(760)}robot.classList.remove('talking')}
+async function doAction(a){if(stopped)return;switch(a.cmd){case 'move_forward':case 'move_backward':{const dir=a.cmd==='move_forward'?1:-1;position+=dir;absoluteSteps++;setPosition();robot.classList.add('walk');showBubble(dir>0?'Moving forward! ➡️':'Moving backward! ⬅️');beep(dir>0?590:390,.13);addLog('✓ '+(dir>0?'Forward':'Backward')+' • step '+absoluteSteps);await delay(700);robot.classList.remove('walk');break}case 'say':addLog('💬 '+a.arg);await talk(a.arg);break;case 'count':{const val=a.arg===undefined?actionIndex+1:a.arg;addLog('🔢 '+val);await talk(String(val));break}case 'print':addLog('▸ '+a.arg);showBubble(String(a.arg));beep(700,.08);await delay(470);break}}
+function resetCompareResults(){
+ $('#forResult').textContent='—';$('#whileResult').textContent='—';
+ $('#forCard').classList.remove('playing','completed');$('#whileCard').classList.remove('playing','completed');
+ const c=$('#compareConclusion');c.textContent='Will both loops make the robot do the same thing?';c.classList.remove('success');
+ $('#comparisonOutput').classList.remove('show');$('#comparisonOutput').textContent='';
+}
+forEd.addEventListener('input',resetCompareResults);whileEd.addEventListener('input',resetCompareResults);
+function formatActionCount(acts){return acts.length+' action'+(acts.length===1?'':'s')}
+async function playback(acts,label){
+ position=0;absoluteSteps=0;setPosition();actionIndex=0;total=acts.length;
+ showBubble(label+' loop!');addLog('▶ '+label+' LOOP starts ('+formatActionCount(acts)+')');
+ for(let j=0;j<acts.length;j++){
+  if(stopped)break;
+  actionIndex=j+1;progress.textContent=label+': '+actionIndex+' / '+total+' actions';
+  await doAction(acts[j]);
+ }
+ return !stopped;
+}
+async function run(){
+ if(running)return;
+ const comparing=currentMode==='compare';let programs=[];
+ try{
+  programs=comparing?[{name:'FOR',actions:compile(forEd.value)},{name:'WHILE',actions:compile(whileEd.value)}]:[{name:currentMode.toUpperCase(),actions:compile(ed.value)}];
+ }catch(e){setStatus('ERROR');clearLog();addLog('⚠ '+e.message,true);showBubble('Check the code! 🔧');beep(190,.2);return}
+ if(comparing){resetCompareResults()}
+ if('speechSynthesis' in window)window.speechSynthesis.cancel();
+ stopped=false;running=true;position=0;absoluteSteps=0;setPosition();clearLog();
+ $('#runBtn').disabled=true;$('#stopBtn').disabled=false;
+ setStatus('RUNNING');showBubble('Running your code! 🚀');beep(770,.10);
+ try{
+  for(let i=0;i<programs.length;i++){
+   if(stopped)break;
+   const {name,actions}=programs[i];
+   const card=comparing?$(name==='FOR'?'#forCard':'#whileCard'):null;
+   if(card)card.classList.add('playing');
+   // Restore robot to Step 0 before executing the second loop.
+   if(i>0){addLog('↻ Robot reset to start for WHILE');showBubble('Now the WHILE loop!');position=0;absoluteSteps=0;setPosition();await delay(500)}
+   if(stopped)break;
+   await playback(actions,name);
+   if(card){card.classList.remove('playing');if(!stopped){card.classList.add('completed');$(name==='FOR'?'#forResult':'#whileResult').textContent=formatActionCount(actions)}}
+  }
+  if(stopped){addLog('■ Program stopped');showBubble('Program stopped');setStatus('READY')}
+  else{
+   if(comparing){
+    const f=programs[0].actions,w=programs[1].actions;
+    const equal=JSON.stringify(f.map(a=>[a.cmd,a.arg]))===JSON.stringify(w.map(a=>[a.cmd,a.arg]));
+    const msg=equal?'✅ SAME RESULT! Two different loops, same robot actions.':'🔍 DIFFERENT RESULTS! Compare your numbers and commands.';
+    const conclusion=$('#compareConclusion');conclusion.textContent=msg;conclusion.classList.toggle('success',equal);
+    const display=$('#comparisonOutput');display.replaceChildren();
+    const left=document.createElement('span');left.textContent='FOR: '+formatActionCount(f);
+    const right=document.createElement('span');right.textContent='WHILE: '+formatActionCount(w);
+    display.append(left,' • ',right);display.classList.add('show');
+    addLog(msg);
+    showBubble(equal?'Same result! 🌟':'Check the difference! 🔎');
+   }else{addLog('✔ Program completed!');showBubble('Amazing coding! ⭐')}
+   setStatus('FINISHED');beep(950,.14);
+  }
+ }finally{
+  running=false;stopped=false;$('#runBtn').disabled=false;$('#stopBtn').disabled=true;
+  robot.classList.remove('walk','talking');
+  $('#forCard').classList.remove('playing');$('#whileCard').classList.remove('playing');
+ }
+}
+// Initialize stage and allow testing from the browser console.
+forEd.value=SAMPLES.for.forward.replace(/^#.*\n/,'');whileEd.value=SAMPLES.while.forward;resetCompareResults();resetWorld();window.roboLab={compile,choose,run,stop,reset:resetWorld,compare:()=>document.querySelector('[data-mode="compare"]').click()};
+})();
+</script>
+</body>
+</html>
